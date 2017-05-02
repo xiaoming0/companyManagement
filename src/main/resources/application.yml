@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    active: dev
+
+
+server:
+  port: 5555
+  context-path: /companyManagement
+
+
+mybatis:
+  mapperLocations: classpath:/mappers/*.xml
+  typeAliasesPackage: com.kaamoo.companymanagement.entity
+#  config: classpath:/mybatis/mybatis-config.xml
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://192.168.0.254:3306/company?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    maxActive: 20
+    initialSize: 5
+    maxWait: 60000
+    minIdle: 5
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    filters: stat,wall,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
+  freemarker:
+    request-context-attribute: request
+    charset: UTF-8
+
+

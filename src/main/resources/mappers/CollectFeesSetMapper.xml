@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaamoo.companymanagement.mappers.CollectFeesSetMapper">
+  <resultMap id="BaseResultMap" type="com.kaamoo.companymanagement.entity.CollectFeesSet">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="companyId" jdbcType="BIGINT" property="companyId" />
+    <result column="djInsuranceType" jdbcType="INTEGER" property="djInsuranceType" />
+    <result column="djiMoneyOrder" jdbcType="DECIMAL" property="djiMoneyOrder" />
+    <result column="djiMoneyMonth" jdbcType="DECIMAL" property="djiMoneyMonth" />
+    <result column="djiDeductTimeOrder" jdbcType="INTEGER" property="djiDeductTimeOrder" />
+    <result column="djiDeductTimeMonth" jdbcType="INTEGER" property="djiDeductTimeMonth" />
+    <result column="insureScopeStart" jdbcType="INTEGER" property="insureScopeStart" />
+    <result column="insureScopeEnd" jdbcType="INTEGER" property="insureScopeEnd" />
+    <result column="driveYear" jdbcType="INTEGER" property="driveYear" />
+    <result column="mishapInsuranceType" jdbcType="INTEGER" property="mishapInsuranceType" />
+    <result column="miMoneyOrder" jdbcType="INTEGER" property="miMoneyOrder" />
+    <result column="miMoneyMonth" jdbcType="INTEGER" property="miMoneyMonth" />
+    <result column="miDeductTimeOrder" jdbcType="INTEGER" property="miDeductTimeOrder" />
+    <result column="miDeductTimeMonth" jdbcType="INTEGER" property="miDeductTimeMonth" />
+    <result column="infoCostType" jdbcType="INTEGER" property="infoCostType" />
+    <result column="icMoneyOrder" jdbcType="INTEGER" property="icMoneyOrder" />
+    <result column="icMoneyMonth" jdbcType="INTEGER" property="icMoneyMonth" />
+    <result column="icDeductTimeOrder" jdbcType="INTEGER" property="icDeductTimeOrder" />
+    <result column="icDeductTimeMonth" jdbcType="INTEGER" property="icDeductTimeMonth" />
+    <result column="djInsuranceMemo" jdbcType="VARCHAR" property="djInsuranceMemo" />
+    <result column="mishapInsuranceMemo" jdbcType="VARCHAR" property="mishapInsuranceMemo" />
+    <result column="chargeContent" jdbcType="VARCHAR" property="chargeContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, companyId, djInsuranceType, djiMoneyOrder, djiMoneyMonth, djiDeductTimeOrder, 
+    djiDeductTimeMonth, insureScopeStart, insureScopeEnd, driveYear, mishapInsuranceType, 
+    miMoneyOrder, miMoneyMonth, miDeductTimeOrder, miDeductTimeMonth, infoCostType, icMoneyOrder, 
+    icMoneyMonth, icDeductTimeOrder, icDeductTimeMonth, djInsuranceMemo, mishapInsuranceMemo, 
+    chargeContent
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_collectFees_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from c_collectFees_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.kaamoo.companymanagement.entity.CollectFeesSet">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_collectFees_set (companyId, djInsuranceType, djiMoneyOrder, 
+      djiMoneyMonth, djiDeductTimeOrder, djiDeductTimeMonth, 
+      insureScopeStart, insureScopeEnd, driveYear, 
+      mishapInsuranceType, miMoneyOrder, miMoneyMonth, 
+      miDeductTimeOrder, miDeductTimeMonth, infoCostType, 
+      icMoneyOrder, icMoneyMonth, icDeductTimeOrder, 
+      icDeductTimeMonth, djInsuranceMemo, mishapInsuranceMemo, 
+      chargeContent)
+    values (#{companyId,jdbcType=BIGINT}, #{djInsuranceType,jdbcType=INTEGER}, #{djiMoneyOrder,jdbcType=DECIMAL}, 
+      #{djiMoneyMonth,jdbcType=DECIMAL}, #{djiDeductTimeOrder,jdbcType=INTEGER}, #{djiDeductTimeMonth,jdbcType=INTEGER}, 
+      #{insureScopeStart,jdbcType=INTEGER}, #{insureScopeEnd,jdbcType=INTEGER}, #{driveYear,jdbcType=INTEGER}, 
+      #{mishapInsuranceType,jdbcType=INTEGER}, #{miMoneyOrder,jdbcType=INTEGER}, #{miMoneyMonth,jdbcType=INTEGER}, 
+      #{miDeductTimeOrder,jdbcType=INTEGER}, #{miDeductTimeMonth,jdbcType=INTEGER}, #{infoCostType,jdbcType=INTEGER}, 
+      #{icMoneyOrder,jdbcType=INTEGER}, #{icMoneyMonth,jdbcType=INTEGER}, #{icDeductTimeOrder,jdbcType=INTEGER}, 
+      #{icDeductTimeMonth,jdbcType=INTEGER}, #{djInsuranceMemo,jdbcType=VARCHAR}, #{mishapInsuranceMemo,jdbcType=VARCHAR}, 
+      #{chargeContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaamoo.companymanagement.entity.CollectFeesSet">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_collectFees_set
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        companyId,
+      </if>
+      <if test="djInsuranceType != null">
+        djInsuranceType,
+      </if>
+      <if test="djiMoneyOrder != null">
+        djiMoneyOrder,
+      </if>
+      <if test="djiMoneyMonth != null">
+        djiMoneyMonth,
+      </if>
+      <if test="djiDeductTimeOrder != null">
+        djiDeductTimeOrder,
+      </if>
+      <if test="djiDeductTimeMonth != null">
+        djiDeductTimeMonth,
+      </if>
+      <if test="insureScopeStart != null">
+        insureScopeStart,
+      </if>
+      <if test="insureScopeEnd != null">
+        insureScopeEnd,
+      </if>
+      <if test="driveYear != null">
+        driveYear,
+      </if>
+      <if test="mishapInsuranceType != null">
+        mishapInsuranceType,
+      </if>
+      <if test="miMoneyOrder != null">
+        miMoneyOrder,
+      </if>
+      <if test="miMoneyMonth != null">
+        miMoneyMonth,
+      </if>
+      <if test="miDeductTimeOrder != null">
+        miDeductTimeOrder,
+      </if>
+      <if test="miDeductTimeMonth != null">
+        miDeductTimeMonth,
+      </if>
+      <if test="infoCostType != null">
+        infoCostType,
+      </if>
+      <if test="icMoneyOrder != null">
+        icMoneyOrder,
+      </if>
+      <if test="icMoneyMonth != null">
+        icMoneyMonth,
+      </if>
+      <if test="icDeductTimeOrder != null">
+        icDeductTimeOrder,
+      </if>
+      <if test="icDeductTimeMonth != null">
+        icDeductTimeMonth,
+      </if>
+      <if test="djInsuranceMemo != null">
+        djInsuranceMemo,
+      </if>
+      <if test="mishapInsuranceMemo != null">
+        mishapInsuranceMemo,
+      </if>
+      <if test="chargeContent != null">
+        chargeContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="djInsuranceType != null">
+        #{djInsuranceType,jdbcType=INTEGER},
+      </if>
+      <if test="djiMoneyOrder != null">
+        #{djiMoneyOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="djiMoneyMonth != null">
+        #{djiMoneyMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="djiDeductTimeOrder != null">
+        #{djiDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="djiDeductTimeMonth != null">
+        #{djiDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="insureScopeStart != null">
+        #{insureScopeStart,jdbcType=INTEGER},
+      </if>
+      <if test="insureScopeEnd != null">
+        #{insureScopeEnd,jdbcType=INTEGER},
+      </if>
+      <if test="driveYear != null">
+        #{driveYear,jdbcType=INTEGER},
+      </if>
+      <if test="mishapInsuranceType != null">
+        #{mishapInsuranceType,jdbcType=INTEGER},
+      </if>
+      <if test="miMoneyOrder != null">
+        #{miMoneyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="miMoneyMonth != null">
+        #{miMoneyMonth,jdbcType=INTEGER},
+      </if>
+      <if test="miDeductTimeOrder != null">
+        #{miDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="miDeductTimeMonth != null">
+        #{miDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="infoCostType != null">
+        #{infoCostType,jdbcType=INTEGER},
+      </if>
+      <if test="icMoneyOrder != null">
+        #{icMoneyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icMoneyMonth != null">
+        #{icMoneyMonth,jdbcType=INTEGER},
+      </if>
+      <if test="icDeductTimeOrder != null">
+        #{icDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icDeductTimeMonth != null">
+        #{icDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="djInsuranceMemo != null">
+        #{djInsuranceMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="mishapInsuranceMemo != null">
+        #{mishapInsuranceMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeContent != null">
+        #{chargeContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaamoo.companymanagement.entity.CollectFeesSet">
+    update c_collectFees_set
+    <set>
+      <if test="companyId != null">
+        companyId = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="djInsuranceType != null">
+        djInsuranceType = #{djInsuranceType,jdbcType=INTEGER},
+      </if>
+      <if test="djiMoneyOrder != null">
+        djiMoneyOrder = #{djiMoneyOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="djiMoneyMonth != null">
+        djiMoneyMonth = #{djiMoneyMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="djiDeductTimeOrder != null">
+        djiDeductTimeOrder = #{djiDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="djiDeductTimeMonth != null">
+        djiDeductTimeMonth = #{djiDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="insureScopeStart != null">
+        insureScopeStart = #{insureScopeStart,jdbcType=INTEGER},
+      </if>
+      <if test="insureScopeEnd != null">
+        insureScopeEnd = #{insureScopeEnd,jdbcType=INTEGER},
+      </if>
+      <if test="driveYear != null">
+        driveYear = #{driveYear,jdbcType=INTEGER},
+      </if>
+      <if test="mishapInsuranceType != null">
+        mishapInsuranceType = #{mishapInsuranceType,jdbcType=INTEGER},
+      </if>
+      <if test="miMoneyOrder != null">
+        miMoneyOrder = #{miMoneyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="miMoneyMonth != null">
+        miMoneyMonth = #{miMoneyMonth,jdbcType=INTEGER},
+      </if>
+      <if test="miDeductTimeOrder != null">
+        miDeductTimeOrder = #{miDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="miDeductTimeMonth != null">
+        miDeductTimeMonth = #{miDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="infoCostType != null">
+        infoCostType = #{infoCostType,jdbcType=INTEGER},
+      </if>
+      <if test="icMoneyOrder != null">
+        icMoneyOrder = #{icMoneyOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icMoneyMonth != null">
+        icMoneyMonth = #{icMoneyMonth,jdbcType=INTEGER},
+      </if>
+      <if test="icDeductTimeOrder != null">
+        icDeductTimeOrder = #{icDeductTimeOrder,jdbcType=INTEGER},
+      </if>
+      <if test="icDeductTimeMonth != null">
+        icDeductTimeMonth = #{icDeductTimeMonth,jdbcType=INTEGER},
+      </if>
+      <if test="djInsuranceMemo != null">
+        djInsuranceMemo = #{djInsuranceMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="mishapInsuranceMemo != null">
+        mishapInsuranceMemo = #{mishapInsuranceMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeContent != null">
+        chargeContent = #{chargeContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaamoo.companymanagement.entity.CollectFeesSet">
+    update c_collectFees_set
+    set companyId = #{companyId,jdbcType=BIGINT},
+      djInsuranceType = #{djInsuranceType,jdbcType=INTEGER},
+      djiMoneyOrder = #{djiMoneyOrder,jdbcType=DECIMAL},
+      djiMoneyMonth = #{djiMoneyMonth,jdbcType=DECIMAL},
+      djiDeductTimeOrder = #{djiDeductTimeOrder,jdbcType=INTEGER},
+      djiDeductTimeMonth = #{djiDeductTimeMonth,jdbcType=INTEGER},
+      insureScopeStart = #{insureScopeStart,jdbcType=INTEGER},
+      insureScopeEnd = #{insureScopeEnd,jdbcType=INTEGER},
+      driveYear = #{driveYear,jdbcType=INTEGER},
+      mishapInsuranceType = #{mishapInsuranceType,jdbcType=INTEGER},
+      miMoneyOrder = #{miMoneyOrder,jdbcType=INTEGER},
+      miMoneyMonth = #{miMoneyMonth,jdbcType=INTEGER},
+      miDeductTimeOrder = #{miDeductTimeOrder,jdbcType=INTEGER},
+      miDeductTimeMonth = #{miDeductTimeMonth,jdbcType=INTEGER},
+      infoCostType = #{infoCostType,jdbcType=INTEGER},
+      icMoneyOrder = #{icMoneyOrder,jdbcType=INTEGER},
+      icMoneyMonth = #{icMoneyMonth,jdbcType=INTEGER},
+      icDeductTimeOrder = #{icDeductTimeOrder,jdbcType=INTEGER},
+      icDeductTimeMonth = #{icDeductTimeMonth,jdbcType=INTEGER},
+      djInsuranceMemo = #{djInsuranceMemo,jdbcType=VARCHAR},
+      mishapInsuranceMemo = #{mishapInsuranceMemo,jdbcType=VARCHAR},
+      chargeContent = #{chargeContent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

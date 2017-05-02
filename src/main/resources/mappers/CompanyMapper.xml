@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kaamoo.companymanagement.mappers.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.kaamoo.companymanagement.entity.Company">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="abbreviation" jdbcType="VARCHAR" property="abbreviation" />
+    <result column="companyAddress" jdbcType="VARCHAR" property="companyaddress" />
+    <result column="companyName" jdbcType="VARCHAR" property="companyname" />
+    <result column="companyType" jdbcType="BIT" property="companytype" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="fox" jdbcType="VARCHAR" property="fox" />
+    <result column="fzzPhone" jdbcType="VARCHAR" property="fzzphone" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="manager" jdbcType="VARCHAR" property="manager" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="mobilePhone" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="scope" jdbcType="INTEGER" property="scope" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="area_id" jdbcType="BIGINT" property="areaId" />
+    <result column="pinyin" jdbcType="VARCHAR" property="pinyin" />
+    <result column="signName" jdbcType="VARCHAR" property="signname" />
+    <result column="driverLevel_id" jdbcType="BIGINT" property="driverlevelId" />
+    <result column="appKey" jdbcType="VARCHAR" property="appkey" />
+    <result column="cityName" jdbcType="VARCHAR" property="cityname" />
+    <result column="provName" jdbcType="VARCHAR" property="provname" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="introduceTitle" jdbcType="VARCHAR" property="introducetitle" />
+    <result column="introduceContent" jdbcType="VARCHAR" property="introducecontent" />
+    <result column="recommendPicture" jdbcType="VARCHAR" property="recommendpicture" />
+    <result column="recommendIntroduceTitle" jdbcType="VARCHAR" property="recommendintroducetitle" />
+    <result column="recommendIntroduceContent" jdbcType="VARCHAR" property="recommendintroducecontent" />
+    <result column="companyWebURL" jdbcType="VARCHAR" property="companyweburl" />
+    <result column="shareTitle" jdbcType="VARCHAR" property="sharetitle" />
+    <result column="shareContent" jdbcType="VARCHAR" property="sharecontent" />
+    <result column="shareImage" jdbcType="VARCHAR" property="shareimage" />
+    <result column="shareURL" jdbcType="VARCHAR" property="shareurl" />
+    <result column="filiale_appKey" jdbcType="VARCHAR" property="filialeAppKey" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.kaamoo.companymanagement.entity.CompanyWithBLOBs">
+    <result column="feeContent" jdbcType="LONGVARCHAR" property="feecontent" />
+    <result column="agreement" jdbcType="LONGVARCHAR" property="agreement" />
+    <result column="agreementEmploy" jdbcType="LONGVARCHAR" property="agreementemploy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, created, updated, abbreviation, companyAddress, companyName, companyType, email, 
+    fox, fzzPhone, latitude, logo, longitude, manager, memo, mobilePhone, scope, telephone, 
+    area_id, pinyin, signName, driverLevel_id, appKey, cityName, provName, picture, introduceTitle, 
+    introduceContent, recommendPicture, recommendIntroduceTitle, recommendIntroduceContent, 
+    companyWebURL, shareTitle, shareContent, shareImage, shareURL,filiale_appKey
+  </sql>
+  <sql id="Blob_Column_List">
+    feeContent, agreement, agreementEmploy
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from c_company
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCompanyName" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM c_company WHERE companyName = #{companyName}
+  </select>
+
+  <select id="selectByAbbreviation" resultMap="BaseResultMap">
+   SELECT <include refid="Base_Column_List"/> FROM c_company WHERE abbreviation = #{abbreviation}
+  </select>
+
+  <select id="selectByFilialeAppKey" resultMap="BaseResultMap">
+   SELECT <include refid="Base_Column_List"/> FROM c_company WHERE filiale_appKey = #{filialeAppKey}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from c_company
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.kaamoo.companymanagement.entity.CompanyWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into c_company (created, updated,
+      abbreviation, companyAddress, companyName, 
+      companyType, email, fox, 
+      fzzPhone, latitude, logo, 
+      longitude, manager, memo, 
+      mobilePhone, scope, telephone, 
+      area_id, pinyin, signName, 
+      driverLevel_id, appKey, cityName, 
+      provName, picture, introduceTitle, 
+      introduceContent, recommendPicture, recommendIntroduceTitle, 
+      recommendIntroduceContent, companyWebURL, 
+      shareTitle, shareContent, shareImage, 
+      shareURL, feeContent, agreement, 
+      agreementEmploy,filiale_appKey)
+    values (now(), now(),
+      #{abbreviation,jdbcType=VARCHAR}, #{companyaddress,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, 
+      #{companytype,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, #{fox,jdbcType=VARCHAR}, 
+      #{fzzphone,jdbcType=VARCHAR}, #{latitude,jdbcType=DOUBLE}, #{logo,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=DOUBLE}, #{manager,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{mobilephone,jdbcType=VARCHAR}, #{scope,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, 
+      #{areaId,jdbcType=BIGINT}, #{pinyin,jdbcType=VARCHAR}, #{signname,jdbcType=VARCHAR}, 
+      #{driverlevelId,jdbcType=BIGINT}, #{appkey,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{provname,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{introducetitle,jdbcType=VARCHAR}, 
+      #{introducecontent,jdbcType=VARCHAR}, #{recommendpicture,jdbcType=VARCHAR}, #{recommendintroducetitle,jdbcType=VARCHAR}, 
+      #{recommendintroducecontent,jdbcType=VARCHAR}, #{companyweburl,jdbcType=VARCHAR}, 
+      #{sharetitle,jdbcType=VARCHAR}, #{sharecontent,jdbcType=VARCHAR}, #{shareimage,jdbcType=VARCHAR}, 
+      #{shareurl,jdbcType=VARCHAR}, #{feecontent,jdbcType=LONGVARCHAR}, #{agreement,jdbcType=LONGVARCHAR}, 
+      #{agreementemploy,jdbcType=LONGVARCHAR},#{filialeAppKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kaamoo.companymanagement.entity.CompanyWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT
+      LAST_INSERT_ID()
+    </selectKey>
+    insert into c_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        created,
+        updated,
+      <if test="abbreviation != null">
+        abbreviation,
+      </if>
+      <if test="companyaddress != null">
+        companyAddress,
+      </if>
+      <if test="companyname != null">
+        companyName,
+      </if>
+      <if test="companytype != null">
+        companyType,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="fox != null">
+        fox,
+      </if>
+      <if test="fzzphone != null">
+        fzzPhone,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="manager != null">
+        manager,
+      </if>
+      <if test="memo != null">
+        memo,
+      </if>
+      <if test="mobilephone != null">
+        mobilePhone,
+      </if>
+      <if test="scope != null">
+        scope,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="pinyin != null">
+        pinyin,
+      </if>
+      <if test="signname != null">
+        signName,
+      </if>
+      <if test="driverlevelId != null">
+        driverLevel_id,
+      </if>
+      <if test="appkey != null">
+        appKey,
+      </if>
+      <if test="cityname != null">
+        cityName,
+      </if>
+      <if test="provname != null">
+        provName,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="introducetitle != null">
+        introduceTitle,
+      </if>
+      <if test="introducecontent != null">
+        introduceContent,
+      </if>
+      <if test="recommendpicture != null">
+        recommendPicture,
+      </if>
+      <if test="recommendintroducetitle != null">
+        recommendIntroduceTitle,
+      </if>
+      <if test="recommendintroducecontent != null">
+        recommendIntroduceContent,
+      </if>
+      <if test="companyweburl != null">
+        companyWebURL,
+      </if>
+      <if test="sharetitle != null">
+        shareTitle,
+      </if>
+      <if test="sharecontent != null">
+        shareContent,
+      </if>
+      <if test="shareimage != null">
+        shareImage,
+      </if>
+      <if test="shareurl != null">
+        shareURL,
+      </if>
+      <if test="feecontent != null">
+        feeContent,
+      </if>
+      <if test="agreement != null">
+        agreement,
+      </if>
+      <if test="agreementemploy != null">
+        agreementEmploy,
+      </if>
+      <if test="filialeAppKey != null">
+        filiale_appKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        now(),
+        now(),
+      <if test="abbreviation != null">
+        #{abbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null">
+        #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companytype != null">
+        #{companytype,jdbcType=BIT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fox != null">
+        #{fox,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzphone != null">
+        #{fzzphone,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="manager != null">
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        #{scope,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="pinyin != null">
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="signname != null">
+        #{signname,jdbcType=VARCHAR},
+      </if>
+      <if test="driverlevelId != null">
+        #{driverlevelId,jdbcType=BIGINT},
+      </if>
+      <if test="appkey != null">
+        #{appkey,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="provname != null">
+        #{provname,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="introducetitle != null">
+        #{introducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="introducecontent != null">
+        #{introducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendpicture != null">
+        #{recommendpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendintroducetitle != null">
+        #{recommendintroducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendintroducecontent != null">
+        #{recommendintroducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="companyweburl != null">
+        #{companyweburl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetitle != null">
+        #{sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sharecontent != null">
+        #{sharecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="shareimage != null">
+        #{shareimage,jdbcType=VARCHAR},
+      </if>
+      <if test="shareurl != null">
+        #{shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="feecontent != null">
+        #{feecontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="agreement != null">
+        #{agreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="agreementemploy != null">
+        #{agreementemploy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filialeAppKey != null">
+        #{filialeAppKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kaamoo.companymanagement.entity.CompanyWithBLOBs">
+    update c_company
+    <set>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="abbreviation != null">
+        abbreviation = #{abbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null">
+        companyAddress = #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null">
+        companyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="companytype != null">
+        companyType = #{companytype,jdbcType=BIT},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fox != null">
+        fox = #{fox,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzphone != null">
+        fzzPhone = #{fzzphone,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="manager != null">
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilephone != null">
+        mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        scope = #{scope,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="pinyin != null">
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="signname != null">
+        signName = #{signname,jdbcType=VARCHAR},
+      </if>
+      <if test="driverlevelId != null">
+        driverLevel_id = #{driverlevelId,jdbcType=BIGINT},
+      </if>
+      <if test="appkey != null">
+        appKey = #{appkey,jdbcType=VARCHAR},
+      </if>
+      <if test="cityname != null">
+        cityName = #{cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="provname != null">
+        provName = #{provname,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="introducetitle != null">
+        introduceTitle = #{introducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="introducecontent != null">
+        introduceContent = #{introducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendpicture != null">
+        recommendPicture = #{recommendpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendintroducetitle != null">
+        recommendIntroduceTitle = #{recommendintroducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendintroducecontent != null">
+        recommendIntroduceContent = #{recommendintroducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="companyweburl != null">
+        companyWebURL = #{companyweburl,jdbcType=VARCHAR},
+      </if>
+      <if test="sharetitle != null">
+        shareTitle = #{sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sharecontent != null">
+        shareContent = #{sharecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="shareimage != null">
+        shareImage = #{shareimage,jdbcType=VARCHAR},
+      </if>
+      <if test="shareurl != null">
+        shareURL = #{shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="feecontent != null">
+        feeContent = #{feecontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="agreement != null">
+        agreement = #{agreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="agreementemploy != null">
+        agreementEmploy = #{agreementemploy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="filialeAppKey != null">
+        filiale_appKey = #{filialeAppKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.kaamoo.companymanagement.entity.CompanyWithBLOBs">
+    update c_company
+    set created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      abbreviation = #{abbreviation,jdbcType=VARCHAR},
+      companyAddress = #{companyaddress,jdbcType=VARCHAR},
+      companyName = #{companyname,jdbcType=VARCHAR},
+      companyType = #{companytype,jdbcType=BIT},
+      email = #{email,jdbcType=VARCHAR},
+      fox = #{fox,jdbcType=VARCHAR},
+      fzzPhone = #{fzzphone,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      logo = #{logo,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      manager = #{manager,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=BIGINT},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      signName = #{signname,jdbcType=VARCHAR},
+      driverLevel_id = #{driverlevelId,jdbcType=BIGINT},
+      appKey = #{appkey,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      provName = #{provname,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      introduceTitle = #{introducetitle,jdbcType=VARCHAR},
+      introduceContent = #{introducecontent,jdbcType=VARCHAR},
+      recommendPicture = #{recommendpicture,jdbcType=VARCHAR},
+      recommendIntroduceTitle = #{recommendintroducetitle,jdbcType=VARCHAR},
+      recommendIntroduceContent = #{recommendintroducecontent,jdbcType=VARCHAR},
+      companyWebURL = #{companyweburl,jdbcType=VARCHAR},
+      shareTitle = #{sharetitle,jdbcType=VARCHAR},
+      shareContent = #{sharecontent,jdbcType=VARCHAR},
+      shareImage = #{shareimage,jdbcType=VARCHAR},
+      shareURL = #{shareurl,jdbcType=VARCHAR},
+      feeContent = #{feecontent,jdbcType=LONGVARCHAR},
+      agreement = #{agreement,jdbcType=LONGVARCHAR},
+      agreementEmploy = #{agreementemploy,jdbcType=LONGVARCHAR},
+      filiale_appKey = #{filialeAppKey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kaamoo.companymanagement.entity.Company">
+    update c_company
+    set created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP},
+      abbreviation = #{abbreviation,jdbcType=VARCHAR},
+      companyAddress = #{companyaddress,jdbcType=VARCHAR},
+      companyName = #{companyname,jdbcType=VARCHAR},
+      companyType = #{companytype,jdbcType=BIT},
+      email = #{email,jdbcType=VARCHAR},
+      fox = #{fox,jdbcType=VARCHAR},
+      fzzPhone = #{fzzphone,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      logo = #{logo,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      manager = #{manager,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      mobilePhone = #{mobilephone,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=BIGINT},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      signName = #{signname,jdbcType=VARCHAR},
+      driverLevel_id = #{driverlevelId,jdbcType=BIGINT},
+      appKey = #{appkey,jdbcType=VARCHAR},
+      cityName = #{cityname,jdbcType=VARCHAR},
+      provName = #{provname,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      introduceTitle = #{introducetitle,jdbcType=VARCHAR},
+      introduceContent = #{introducecontent,jdbcType=VARCHAR},
+      recommendPicture = #{recommendpicture,jdbcType=VARCHAR},
+      recommendIntroduceTitle = #{recommendintroducetitle,jdbcType=VARCHAR},
+      recommendIntroduceContent = #{recommendintroducecontent,jdbcType=VARCHAR},
+      companyWebURL = #{companyweburl,jdbcType=VARCHAR},
+      shareTitle = #{sharetitle,jdbcType=VARCHAR},
+      shareContent = #{sharecontent,jdbcType=VARCHAR},
+      shareImage = #{shareimage,jdbcType=VARCHAR},
+      shareURL = #{shareurl,jdbcType=VARCHAR},
+      filiale_appKey = #{filialeAppKey,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByIdAndAppKeySelective" >
+    update c_company
+    <set>
+        updated =now(),
+      <if test="company.abbreviation != null">
+        abbreviation = #{company.abbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="company.companyaddress != null">
+        companyAddress = #{company.companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="company.companyname != null">
+        companyName = #{company.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="company.companytype != null">
+        companyType = #{company.companytype,jdbcType=BIT},
+      </if>
+      <if test="company.email != null">
+        email = #{company.email,jdbcType=VARCHAR},
+      </if>
+      <if test="company.fox != null">
+        fox = #{company.fox,jdbcType=VARCHAR},
+      </if>
+      <if test="company.fzzphone != null">
+        fzzPhone = #{company.fzzphone,jdbcType=VARCHAR},
+      </if>
+      <if test="company.latitude != null">
+        latitude = #{company.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="company.logo != null">
+        logo = #{company.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="company.longitude != null">
+        longitude = #{company.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="company.manager != null">
+        manager = #{company.manager,jdbcType=VARCHAR},
+      </if>
+      <if test="company.memo != null">
+        memo = #{company.memo,jdbcType=VARCHAR},
+      </if>
+      <if test="company.mobilephone != null">
+        mobilePhone = #{company.mobilephone,jdbcType=VARCHAR},
+      </if>
+      <if test="company.scope != null">
+        scope = #{company.scope,jdbcType=INTEGER},
+      </if>
+      <if test="company.telephone != null">
+        telephone = #{company.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="company.areaId != null">
+        area_id = #{company.areaId,jdbcType=BIGINT},
+      </if>
+      <if test="company.pinyin != null">
+        pinyin = #{company.pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="company.signname != null">
+        signName = #{company.signname,jdbcType=VARCHAR},
+      </if>
+      <if test="company.driverlevelId != null">
+        driverLevel_id = #{company.driverlevelId,jdbcType=BIGINT},
+      </if>
+      <if test="company.appkey != null">
+        appKey = #{company.appkey,jdbcType=VARCHAR},
+      </if>
+      <if test="company.cityname != null">
+        cityName = #{company.cityname,jdbcType=VARCHAR},
+      </if>
+      <if test="company.provname != null">
+        provName = #{company.provname,jdbcType=VARCHAR},
+      </if>
+      <if test="company.picture != null">
+        picture = #{company.picture,jdbcType=VARCHAR},
+      </if>
+      <if test="company.introducetitle != null">
+        introduceTitle = #{company.introducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="company.introducecontent != null">
+        introduceContent = #{company.introducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="company.recommendpicture != null">
+        recommendPicture = #{company.recommendpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="company.recommendintroducetitle != null">
+        recommendIntroduceTitle = #{company.recommendintroducetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="company.recommendintroducecontent != null">
+        recommendIntroduceContent = #{company.recommendintroducecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="company.companyweburl != null">
+        companyWebURL = #{company.companyweburl,jdbcType=VARCHAR},
+      </if>
+      <if test="company.sharetitle != null">
+        shareTitle = #{company.sharetitle,jdbcType=VARCHAR},
+      </if>
+      <if test="company.sharecontent != null">
+        shareContent = #{company.sharecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="company.shareimage != null">
+        shareImage = #{company.shareimage,jdbcType=VARCHAR},
+      </if>
+      <if test="company.shareurl != null">
+        shareURL = #{company.shareurl,jdbcType=VARCHAR},
+      </if>
+      <if test="company.filialeAppKey != null">
+        filiale_appKey = #{company.filialeAppKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{company.id,jdbcType=BIGINT} AND appKey =#{appKey}
+  </update>
+
+
+  <select id="selectByParam" resultMap="BaseResultMap">
+   SELECT <include refid="Base_Column_List"/> FROM c_company
+    <where>
+      <if test="param != null">
+        abbreviation LIKE #{param}  or companyName LIKE #{param} or mobilePhone LIKE #{param} or fzzPhone LIKE #{param}
+      </if>
+      AND appKey = #{appKey}
+    </where>
+    LIMIT #{offset},#{limit}
+  </select>
+  <select id="countByParam" resultType="long">
+    SELECT COUNT(id) FROM c_company
+    <where>
+      <if test="param != null">
+        abbreviation LIKE #{param}  or companyName LIKE #{param} or mobilePhone LIKE #{param} or fzzPhone LIKE #{param}
+      </if>
+      AND appKey = #{appKey}
+    </where>
+  </select>
+
+<select id="simpleQueryCompany" resultMap="BaseResultMap">
+  SELECT id,companyName,abbreviation,companyType FROM  c_company WHERE  appKey = #{appKey}
+</select>
+
+ <select id="selectByIdAndAppKey" resultMap="ResultMapWithBLOBs">
+  SELECT
+   <include refid="Base_Column_List" />
+   ,
+   <include refid="Blob_Column_List" />
+   FROM c_company WHERE id = #{companyId} AND appKey = #{appKey}
+ </select>
+
+
+</mapper>
